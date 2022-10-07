@@ -12,9 +12,9 @@ public interface BoardMapper {
     public void insert(BoardVO board);          // insert만 처리
     public void insertSelectKey (BoardVO board);// insert 처리 후 생성된 pk 값 필요 시
 
-    public BoardVO getBoard(long bno);
+    public BoardVO read(long bno);
 
-    public int deleteBoard(long bno);
+    public int delete(long bno);
 
     public int update(BoardVO board);
 }

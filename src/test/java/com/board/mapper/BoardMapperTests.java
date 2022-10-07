@@ -45,14 +45,14 @@ public class BoardMapperTests {
 
     @Test
     public void getBoardTest(){
-        BoardVO board = mapper.getBoard(5l);
+        BoardVO board = mapper.read(5l);
         log.info(board);
 
     }
 
     @Test
     public void deleteTest(){
-        int deletedcnt = mapper.deleteBoard(5l);
+        int deletedcnt = mapper.delete(5l);
         log.info(deletedcnt);
     }
 }
