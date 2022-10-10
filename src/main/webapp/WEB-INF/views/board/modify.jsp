@@ -75,6 +75,8 @@
                 삭제하기
             </button>
         </div>
+
+        <input type="hidden" name="pageNum" value="${cri.pageNum}">
     </form>
 </div>
 <script>
@@ -82,9 +84,10 @@
         const frm = $("form");
 
         $(".btn").click(function (e) {
+            e.preventDefault();
             const oper = $(this).data("oper");
             if (oper === "list") {
-                self.location = "/board/list";
+                self.location = "/board/list?pageNum=${cri.pageNum}";
                 return;
             } else if (oper === "remove") frm.attr("action", "/board/remove");
 

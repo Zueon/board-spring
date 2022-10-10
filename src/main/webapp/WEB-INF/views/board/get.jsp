@@ -13,64 +13,75 @@
                 <a href="#">Home</a>
             </li>
             <li class="breadcrumb-item">
-                <a href="/board/list">Board</a>
+                <a href="/board/list?pageNum=${cri.pageNum}">Board</a>
             </li>
             <li class="breadcrumb-item active" aria-current="page">
                 <c:out value="${board.title}"/>
             </li>
         </ol>
     </nav>
+    <div class="form-group">
+        <label for="title">BNO</label>
+        <input
+                type="text"
+                id="bno"
+                name="bno"
+                class="form-control"
+                value='<c:out value="${board.bno}"/>'
+                readonly
+        />
+    </div>
 
-        <div class="form-group">
-            <label for="title">Title</label>
-            <input
-                    type="text"
-                    id="title"
-                    name="title"
-                    class="form-control"
-                    value='<c:out value="${board.title}"/>'
-                    readonly
-            />
-        </div>
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input
+                type="text"
+                id="title"
+                name="title"
+                class="form-control"
+                value='<c:out value="${board.title}"/>'
+                readonly
+        />
+    </div>
 
-        <div class="form-group">
-            <label for="content">Content</label>
-            <textarea
-                    id="content"
-                    name="content"
-                    rows="5"
-                    class="form-control"
-                    readonly
-            ><c:out value="${board.content}"/></textarea>
-        </div>
-        <div class="form-group">
-            <label for="title">Writer</label>
-            <input
-                    type="text"
-                    id="writer"
-                    name="writer"
-                    class="form-control"
-                    value='<c:out value="${board.writer}"/>'
-                    readonly
-            />
-        </div>
-        <div>
-            <button class="btn btn-primary" data-oper = "list">
-                뒤로가기
-            </button>
-            <button class="btn btn-primary" data-oper = "modify" >
-                수정하기
-            </button>
-        </div>
+    <div class="form-group">
+        <label for="content">Content</label>
+        <textarea
+                id="content"
+                name="content"
+                rows="5"
+                class="form-control"
+                readonly
+        ><c:out value="${board.content}"/></textarea>
+    </div>
+    <div class="form-group">
+        <label for="title">Writer</label>
+        <input
+                type="text"
+                id="writer"
+                name="writer"
+                class="form-control"
+                value='<c:out value="${board.writer}"/>'
+                readonly
+        />
+    </div>
+    <div>
+        <button class="btn btn-primary" data-oper="list">
+            뒤로가기
+        </button>
+        <button class="btn btn-primary" data-oper="modify">
+            수정하기
+        </button>
+    </div>
 
 </div>
 <script>
     $(function () {
-        $(".btn").click(function(e){
 
+        $(".btn").click(function (e) {
             const oper = $(this).data("oper");
-            if (oper === "list") self.location = "/board/list"
-            else if (oper=== "modify") self.location = `/board/modify?bno=${board.bno}`
+            if (oper === "list") self.location = "/board/list?pageNum=${cri.pageNum}"
+            else if (oper === "modify") self.location = "/board/modify?bno=${board.bno}&pageNum=${cri.pageNum}"
 
         })
     })

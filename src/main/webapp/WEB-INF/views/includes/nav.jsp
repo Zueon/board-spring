@@ -18,16 +18,14 @@
                         Home
                     </a>
                 </li>
+
                 <li class="nav-item">
-                    <a href="/about" class="nav-link">
-                        About
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="/posts" class="nav-link">
+                    <a href="/board/list" class="nav-link">
                         Board
                     </a>
                 </li>
+
+
             </ul>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
@@ -36,7 +34,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/users/new" class="nav-link">
+                    <a href="/users/register" class="nav-link">
                         Sign Up
                     </a>
                 </li>
