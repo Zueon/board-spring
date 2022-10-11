@@ -80,8 +80,8 @@
 
         $(".btn").click(function (e) {
             const oper = $(this).data("oper");
-            if (oper === "list") self.location = "/board/list?pageNum=${cri.pageNum}"
-            else if (oper === "modify") self.location = "/board/modify?bno=${board.bno}&pageNum=${cri.pageNum}"
+            if (oper === "list") self.location = "/board/list?pageNum=${cri.pageNum}&type=${cri.type}&keyword=${cri.keyword}"
+            else if (oper === "modify") self.location = "/board/modify?bno=${board.bno}&pageNum=${cri.pageNum}&type=${cri.type}&keyword=${cri.keyword}"
 
         })
     })

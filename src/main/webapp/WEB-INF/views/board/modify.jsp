@@ -20,7 +20,7 @@
             </li>
         </ol>
     </nav>
-    <form name="frm" action="/board/modify" method="post">
+    <form name="frm" action="/board/modify?pageNum=${cri.pageNum}&type=${cri.type}&keyword=${cri.keyword}" method="post">
         <div class="form-group">
             <label for="title">BNO</label>
             <input
@@ -87,9 +87,9 @@
             e.preventDefault();
             const oper = $(this).data("oper");
             if (oper === "list") {
-                self.location = "/board/list?pageNum=${cri.pageNum}";
+                self.location = "/board/list?pageNum=${cri.pageNum}&type=${cri.type}&keyword=${cri.keyword}";
                 return;
-            } else if (oper === "remove") frm.attr("action", "/board/remove");
+            } else if (oper === "remove") frm.attr("action", "/board/remove?pageNum=${cri.pageNum}&type=${cri.type}&keyword=${cri.keyword}");
 
             frm.submit();
         })

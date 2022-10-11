@@ -54,8 +54,9 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
-    public int getTotalBoardCnt() {
+    public int getTotalBoardCnt(Criteria cri) {
         log.info("get total board posts cnt from DB");
-        return mapper.getTotalBoardCnt();
+        return mapper.getTotalBoardCnt(cri);
     }
+
 }

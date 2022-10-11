@@ -2,7 +2,6 @@ package com.board.mapper;
 
 import com.board.domain.BoardVO;
 import com.board.domain.Criteria;
-import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -20,5 +19,6 @@ public interface BoardMapper {
 
     public int update(BoardVO board);
 
-    public int getTotalBoardCnt();
+    public int getTotalBoardCnt(Criteria cri);
+
 }

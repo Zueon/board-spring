@@ -29,11 +29,10 @@ public class BoardController {
 
     @GetMapping("/list")
     public void list(Criteria cri, Model model){
-        log.info("----------------- list -----------------");
-        model.addAttribute("list", service.getList(cri));
 
+        model.addAttribute("list", service.getList(cri));
         // 페이징을 위한 관련 내용 정보를 전달한다.
-        int total = service.getTotalBoardCnt();
+        int total = service.getTotalBoardCnt(cri);
         PageDTO pageInfo = new PageDTO(cri, total);
         model.addAttribute("pageInfo", pageInfo);
 
@@ -66,8 +65,8 @@ public class BoardController {
         log.info("modify : " + board);
         if (service.modify(board)) rttr.addFlashAttribute("result", "success");
 
-        rttr.addAttribute("pageNum", cri.getPageNum());
-        return "redirect:/board/list";
+//        rttr.addAttribute("pageNum", cri.getPageNum());
+        return "redirect:/board/list" + cri.getListLink();
     }
 
     @PostMapping("/remove")
@@ -75,7 +74,7 @@ public class BoardController {
         log.info("modify : " + bno);
         if (service.remove(bno)) rttr.addFlashAttribute("result","success" );
         rttr.addAttribute("pageNum", cri.getPageNum());
-        return "redirect:/board/list";
+        return "redirect:/board/list" +  cri.getListLink();
 
     }
 

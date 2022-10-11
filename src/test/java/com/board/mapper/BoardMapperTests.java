@@ -1,6 +1,7 @@
 package com.board.mapper;
 
 import com.board.domain.BoardVO;
+import com.board.domain.Criteria;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 import org.junit.Test;
@@ -18,12 +19,20 @@ public class BoardMapperTests {
 
 
     @Test
-    public void getListTest(){
+    public void getListTest() {
         mapper.getList().forEach(board -> log.info(board));
     }
 
     @Test
-    public void insertTest(){
+    public void searchTest() {
+        Criteria criteria = new Criteria();
+        criteria.setKeyword("test");
+        criteria.setType("TC");
+        mapper.getListWithPaging(criteria).forEach(board -> log.info(board));
+    }
+
+    @Test
+    public void insertTest() {
         BoardVO board = new BoardVO();
         board.setTitle("test title1");
         board.setContent("testContent");
@@ -34,7 +43,7 @@ public class BoardMapperTests {
     }
 
     @Test
-    public void insertSelectKeyTest(){
+    public void insertSelectKeyTest() {
         BoardVO board = new BoardVO();
         board.setTitle("test title2");
         board.setContent("testContent2");
@@ -44,15 +53,17 @@ public class BoardMapperTests {
     }
 
     @Test
-    public void getBoardTest(){
+    public void getBoardTest() {
         BoardVO board = mapper.read(5l);
         log.info(board);
 
     }
 
     @Test
-    public void deleteTest(){
+    public void deleteTest() {
         int deletedcnt = mapper.delete(5l);
         log.info(deletedcnt);
     }
 }
+
+

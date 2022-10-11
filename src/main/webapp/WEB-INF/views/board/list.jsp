@@ -13,19 +13,19 @@
         </div>
 
         <div class="col">
-            <form class="d-flex" action = "/board/list">
+            <form class="d-flex" action = "/board/list" id="searchForm">
                 <div class="col-sm-3">
-                    <select class="form-select form-control" id="specificSizeSelect">
-                        <option selected>--</option>
-                        <option value="T">제목</option>
-                        <option value="W">작성자</option>
-                        <option value="C">내용</option>
-                        <option value="TW">제목 + 작성자</option>
-                        <option value="TC">제목 + 내용</option>
-                        <option value="TWC">제목 + 작성자 + 내용</option>
+                    <select class="form-select form-control" id="specificSizeSelect" name="type">
+                        <option >--</option>
+                        <option value="T" ${pageInfo.criteria.type.equals("T") ? 'selected' : ''}>제목</option>
+                        <option value="W" ${pageInfo.criteria.type.equals("W") ? 'selected' : ''}>작성자</option>
+                        <option value="C" ${pageInfo.criteria.type.equals("C") ? 'selected' : ''}>내용</option>
+                        <option value="TW" ${pageInfo.criteria.type.equals("TW") ? 'selected' : ''}>제목 + 작성자</option>
+                        <option value="TC" ${pageInfo.criteria.type.equals("TC") ? 'selected' : ''}>제목 + 내용</option>
+                        <option value="TWC" ${pageInfo.criteria.type.equals("TWC") ? 'selected' : ''}>제목 + 작성자 + 내용</option>
                     </select>
                 </div>
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="keyword" value="${pageInfo.criteria.keyword}">
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
         </div>
@@ -45,7 +45,7 @@
         <c:forEach var="board" items="${list}">
             <tr>
                 <td><c:out value="${board.bno}"/></td>
-                <td><a href="/board/get?bno=${board.bno}&pageNum=${pageInfo.criteria.pageNum}">${board.title}</a></td>
+                <td><a href="/board/get?bno=${board.bno}&pageNum=${pageInfo.criteria.pageNum}&keyword=${pageInfo.criteria.keyword}&type=${pageInfo.criteria.type}">${board.title}</a></td>
                 <td><c:out value="${board.writer}"/></td>
                 <td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.regdate}"/></td>
                 <td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.updateDate}"/></td>
@@ -59,7 +59,7 @@
         <ul class="pagination justify-content-center">
             <c:if test="${pageInfo.prev}">
                 <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
+                    <a class="page-link move" href="#" aria-label="Previous" data-page ="${pageInfo.criteria.pageNum}" data-move = "${pageInfo.firstPage-1}" >
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
@@ -72,7 +72,7 @@
 
             <c:if test="${pageInfo.next}">
                 <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
+                    <a class="page-link move" href="#" aria-label="Next" data-page ="${pageInfo.criteria.pageNum}" data-move = "${pageInfo.lastPage+1}" >
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
@@ -117,18 +117,17 @@
             $("#myModal").modal("show");
         }
 
-        // function movePage(e){
-        //     e.preventDefault();
-        //     const targetPage = $(this).data("page");
-        //     self.location
-        //
-        // }
-
         $(".page-link").click(function (e){
             e.preventDefault();
             const targetPage = $(this).data("page");
-            console.log(targetPage);
-            self.location = "/board/list?pageNum=" + targetPage;
+            self.location = "/board/list?pageNum=" + targetPage + "&type=${pageInfo.criteria.type}&keyword=${pageInfo.criteria.keyword}";
+        })
+
+        $(".move").click(function (e) {
+            e.preventDefault();
+            const move =$(this).data("move");
+            self.location = "/board/list?pageNum=" + move;
+
         })
     })
 
