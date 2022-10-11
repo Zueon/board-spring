@@ -13,7 +13,7 @@
         </div>
 
         <div class="col">
-            <form class="d-flex">
+            <form class="d-flex" action = "/board/list">
                 <div class="col-sm-3">
                     <select class="form-select form-control" id="specificSizeSelect">
                         <option selected>--</option>
