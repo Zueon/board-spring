@@ -1,5 +1,6 @@
 package com.board.mapper;
 
+import com.board.domain.Criteria;
 import com.board.domain.ReplyVO;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
@@ -29,7 +30,7 @@ public class ReplyMapperTests {
         IntStream.rangeClosed(1, 10).forEach(i ->{
             ReplyVO replyVO = new ReplyVO();
 
-            replyVO.setBno(bnoArr[i % 5]);
+            replyVO.setBno(bnoArr[0]);
             replyVO.setReply("reply test" + i);
             replyVO.setReplyer("replyer" + i);
             mapper.insert(replyVO);
@@ -45,5 +46,12 @@ public class ReplyMapperTests {
     @Test
     public void deleteTest(){
         log.info(mapper.delete(5l));
+    }
+
+    @Test
+    public void getListTest(){
+        Criteria cri = new Criteria();
+
+        mapper.getListWithPaging(cri, 8L);
     }
 }

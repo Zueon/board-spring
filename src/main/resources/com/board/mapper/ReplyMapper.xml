@@ -20,8 +20,7 @@
     </update>
 
     <select id="getListWithPaging" resultType="com.board.domain.ReplyVO">
---       #{bno}는  getListWithPaging(@Param("cri")Criteria cri, @Param("bno")Long bno); 에서 Param 값을 받은것임
-        select * from TBL_REPLY where BNO = #{bno}
+        select rno, bno, REPLY, REPLYER, REPLYDATE, UPDATEDATE from TBL_REPLY where BNO = #{bno} order by RNO asc
     </select>
 
 </mapper>
