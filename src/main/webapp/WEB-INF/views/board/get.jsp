@@ -75,34 +75,16 @@
     </div>
     <h4 class="mt-3">Comments</h4> <!-- 1 -->
 
-<%--    <% if(comments.length){ %> <!-- 1-1 -->--%>
-<%--    <div class="mt-3 border-bottom">--%>
-<%--        <% comments.forEach(function(comment) { %> <!-- 1-2 -->--%>
-<%--        <div class="border-top pt-1 pb-1">--%>
-<%--            <div class="row">--%>
-<%--                <div class="col-3 col-md-2 col-lg-1 pl-4"><%= comment.author.username %></div> <!-- 1-3 -->--%>
-<%--                <div class="col-9 col-md-10 col-lg-11">--%>
-<%--                    <div class="comment-show">--%>
-<%--                        <div class="comment-text mb-3"><%= comment.text %></div> <!-- 1-4 -->--%>
-<%--                        <small class="d-block">--%>
-<%--                            (Created: <span data-date-time="<%= comment.createdAt %>"></span>) <!-- 1-5 -->--%>
-<%--                        </small>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--        <% }) %>--%>
-<%--    </div>--%>
-<%--    <% } %>--%>
+
     <div class="mt-3"> <!-- 2 -->
         <form action="" method="post">
             <fieldset> <!-- 2-1 -->
                 <div class="row">
                     <div class="col-2">
-                        <input type="text" class="form-control" placeholder="작성자">
+                        <input type="text" class="form-control" placeholder="작성자" name="replyer">
                     </div>
                     <div class="col-6">
-                        <textarea name="text" rows="2" class="form-control"></textarea>
+                        <textarea name="reply" rows="2" class="form-control" ></textarea>
                     </div>
                     <div class="col-2">
                         <button type="submit" class="btn btn-primary h-100 mr-2">Add Comment</button>
@@ -113,6 +95,12 @@
         </form>
     </div>
 
+        <div class="mt-3 border-bottom">
+            <div class="border-top pt-1 pb-1" id="comments">
+
+            </div>
+        </div>
+
 
 </div>
 <script src="/resources/js/reply.js"></script>
@@ -120,6 +108,7 @@
 <script>
 
     $(function () {
+        fetchComments();
 
         $(".btn").click(function (e) {
             const oper = $(this).data("oper");
@@ -128,34 +117,35 @@
 
         })
 
+        function fetchComments() {
+            replyService.getList(
+                {
+                    bno : ${board.bno},
+                    page : 1
+                },
+                (comments) => {
+                   $.each(comments, (idx,comment)=>{
+                       console.log(comment);
+                       let el =
+                           '<div class="row mt-3"> <div class="col-3 col-md-2 col-lg-1 pl-4">'
+                        + comment.replyer +`</div>
+                           <div class="col-9 col-md-10 col-lg-11">
+                           <div class="comment-show d-flex justify-content-between">
+                           <div class="comment-text mb-3">` + comment.reply +`</div>
+                                   <small class="d-block">
+                                       (Created: <span>`+ replyService.displayTime(comment.replyDate)+ `</span>)
+                                   </small>
+                               </div>
+                           </div>
+                       </div>`
+                       $("#comments").append(el);
+                   })
+                }
+            )
+        }
+
     })
 
-
-    <%--replyService.add(--%>
-    <%--    {--%>
-    <%--        reply : "JS TEST",--%>
-    <%--        replyer : "TEST WRITER1",--%>
-    <%--        bno : ${board.bno}--%>
-    <%--    },--%>
-    <%--    (result) => {alert("RESULT : " + result)}--%>
-    <%--)--%>
-
-    <%--replyService.getList(--%>
-    <%--    {--%>
-    <%--        bno : ${board.bno},--%>
-    <%--    }--%>
-    <%--)--%>
-
-    // replyService.remove(63)
-    // replyService.modify({
-    //     "rno": 61,
-    //     "bno": 160,
-    //     "reply": "JS TEST - Changed",
-    // }, (result)=>{
-    //     console.log(result)
-    // })
-    //
-    replyService.get(61)
 
 
 </script>

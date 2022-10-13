@@ -11,5 +11,7 @@ public class TestController {
         model.addAttribute("data", "Hello, Spring from IntelliJ! :)");
         return "index";
     }
+
+
 }
 
