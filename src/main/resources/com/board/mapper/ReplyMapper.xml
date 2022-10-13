@@ -8,7 +8,7 @@
     </insert>
 
     <select id="read" resultType="com.board.domain.ReplyVO" >
-        select * from TBL_REPLY where RNO = #{rno}
+        select * from TBL_REPLY where RNO = #{rno} order by rno;
     </select>
 
     <delete id="delete" >

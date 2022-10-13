@@ -73,12 +73,13 @@
             수정하기
         </button>
     </div>
-    <h4 class="mt-3">Comments</h4> <!-- 1 -->
+    <h4 class="mt-3">Comments</h4>
 
 
-    <div class="mt-3"> <!-- 2 -->
-        <form action="" method="post">
-            <fieldset> <!-- 2-1 -->
+    <div class="mt-3">
+        <form action="/replies/new" method="post" id="commentForm">
+            <input type="hidden" name="bno" value="${board.bno}">
+            <fieldset>
                 <div class="row">
                     <div class="col-2">
                         <input type="text" class="form-control" placeholder="작성자" name="replyer">
@@ -104,45 +105,19 @@
 
 </div>
 <script src="/resources/js/reply.js"></script>
-
+<script src="/resources/js/getPage.js"></script>
 <script>
 
     $(function () {
-        fetchComments();
-
-        $(".btn").click(function (e) {
-            const oper = $(this).data("oper");
-            if (oper === "list") self.location = "/board/list?pageNum=${cri.pageNum}&type=${cri.type}&keyword=${cri.keyword}"
-            else if (oper === "modify") self.location = "/board/modify?bno=${board.bno}&pageNum=${cri.pageNum}&type=${cri.type}&keyword=${cri.keyword}"
-
-        })
-
-        function fetchComments() {
-            replyService.getList(
-                {
-                    bno : ${board.bno},
-                    page : 1
-                },
-                (comments) => {
-                   $.each(comments, (idx,comment)=>{
-                       console.log(comment);
-                       let el =
-                           '<div class="row mt-3"> <div class="col-3 col-md-2 col-lg-1 pl-4">'
-                        + comment.replyer +`</div>
-                           <div class="col-9 col-md-10 col-lg-11">
-                           <div class="comment-show d-flex justify-content-between">
-                           <div class="comment-text mb-3">` + comment.reply +`</div>
-                                   <small class="d-block">
-                                       (Created: <span>`+ replyService.displayTime(comment.replyDate)+ `</span>)
-                                   </small>
-                               </div>
-                           </div>
-                       </div>`
-                       $("#comments").append(el);
-                   })
-                }
-            )
+        const cri = {
+            pageNum : "${cri.pageNum}",
+            type : "${cri.type}",
+            keyword : "${cri.keyword}"
         }
+
+        fetchComments(${board.bno});
+        onBtnClick(cri, ${board.bno})
+        setOnSubmit();
 
     })
 
