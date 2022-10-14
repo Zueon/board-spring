@@ -82,17 +82,16 @@ function commentClick() {
 
     if (oper === "deleteComment") {
         const delChk = confirm("삭제하시겠습니까?");
-
         if (delChk){
             replyService.remove(rno, function (res) {
                 location.reload();
             })
         }
-
-    } else if (oper === "modifyComment") {
+    }
+    else if (oper === "modifyComment") {
         $("#exampleModal").modal("show");
-
-    } else if (oper === "submit-modify") {
+    }
+    else if (oper === "submit-modify") {
         const formData = $("#editCommentForm").serializeObject();
 
         replyService.modify(formData, function (res) {
