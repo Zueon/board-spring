@@ -18,6 +18,20 @@ const replyService = (function(){
         })
     }
 
+    //
+    // function getList(param, cb) {
+    //     const bno = param.bno;
+    //     const page = param.page || 1;
+    //
+    //     $.ajax({
+    //         type : 'GET',
+    //         url: '/replies/pages/' + bno + '/' + page,
+    //         success : function (data) {
+    //             if(cb) cb(data);
+    //
+    //         }
+    //     })
+    // }
 
     function getList(param, cb) {
         const bno = param.bno;
@@ -25,9 +39,9 @@ const replyService = (function(){
 
         $.ajax({
             type : 'GET',
-            url: '/replies/pages/' + bno + '/' + page,
+            url: `/replies/pages/${bno}/${page}`,
             success : function (data) {
-                if(cb) cb(data);
+                if(cb) cb(data.replyCnt, data.list);
 
             }
         })

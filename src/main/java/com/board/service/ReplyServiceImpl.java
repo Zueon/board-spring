@@ -1,6 +1,7 @@
 package com.board.service;
 
 import com.board.domain.Criteria;
+import com.board.domain.ReplyPageDTO;
 import com.board.domain.ReplyVO;
 import com.board.mapper.ReplyMapper;
 import lombok.Setter;
@@ -42,5 +43,14 @@ public class ReplyServiceImpl implements ReplyService{
     @Override
     public List<ReplyVO> getList(Criteria cri, Long bno) {
         return mapper.getListWithPaging(cri, bno);
+    }
+
+    @Override
+    public ReplyPageDTO getListPage(Criteria cri, Long bno) {
+
+        return new ReplyPageDTO(
+                mapper.getListWithPaging(cri, bno),
+                mapper.getReplyCntByBno(bno)
+        );
     }
 }

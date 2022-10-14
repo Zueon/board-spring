@@ -50,8 +50,8 @@ public class ReplyMapperTests {
 
     @Test
     public void getListTest(){
-        Criteria cri = new Criteria();
+        Criteria cri = new Criteria(2,10);
 
-        mapper.getListWithPaging(cri, 8L);
+        mapper.getListWithPaging(cri, 157L);
     }
 }

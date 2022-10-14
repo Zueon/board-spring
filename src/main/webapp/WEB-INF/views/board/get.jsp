@@ -83,13 +83,14 @@
             <fieldset>
                 <div class="row">
                     <div class="col-2">
-                        <input type="text" class="form-control" placeholder="작성자" name="replyer" id = "replyer">
+                        <input type="text" class="form-control" placeholder="작성자" name="replyer" id="replyer">
                     </div>
                     <div class="col-8">
-                        <textarea name="reply" rows="2" class="form-control" id = "reply"></textarea>
+                        <textarea name="reply" rows="2" class="form-control" id="reply"></textarea>
                     </div>
                     <div class="col-2">
-                        <button type="submit" class="cbtn btn btn-primary h-100 mr-2" data-oper="add">Add Comment</button>
+                        <button type="submit" class="btn btn-primary h-100 mr-2" data-oper="add">Add Comment
+                        </button>
                     </div>
                 </div>
 
@@ -97,11 +98,11 @@
         </form>
     </div>
 
-        <div class="mt-3 border-bottom">
-            <div class="border-top pt-1 pb-1" id="comments">
-
-            </div>
+    <div class="mt-3 border-bottom">
+        <div class="border-top pt-1 pb-1" id="comments">
         </div>
+    </div>
+    <div id="replyPage"></div>
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -117,17 +118,19 @@
                         <div class="form-group">
                             <input type="hidden" id="rno" name="rno">
                             <label for="replyer-modal" class="col-form-label">작성자:</label>
-                            <input type="text" class="form-control" id="replyer-modal" name="replyer"  readonly>
+                            <input type="text" class="form-control" id="replyer-modal" name="replyer" readonly>
                         </div>
                         <div class="form-group">
                             <label for="reply-modal" class="col-form-label">댓글:</label>
-                            <textarea class="form-control" id="reply-modal" name="reply" ></textarea>
+                            <textarea class="form-control" id="reply-modal" name="reply"></textarea>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary commentBtn" id="submitModal" data-oper="submit-modify">Send message</button>
+                    <button type="button" class="btn btn-primary commentBtn" id="submitModal" data-oper="submit-modify">
+                        Send message
+                    </button>
                 </div>
             </div>
         </div>
@@ -139,24 +142,24 @@
 <script>
 
 
-
-    $(document).on("click", ".commentBtn",commentClick);
+    $(document).on("click", ".commentBtn", commentClick);
+    $(document).on("click", ".page-link", pageClick);
 
 
     $(function () {
         const bno = ${board.bno};
 
         const cri = {
-            pageNum : "${cri.pageNum}",
-            type : "${cri.type}",
-            keyword : "${cri.keyword}"
+            pageNum: "${cri.pageNum}",
+            type: "${cri.type}",
+            keyword: "${cri.keyword}"
         }
 
-        fetchComments(bno);
+        // fetchComments(bno);
+        fetchComments2(bno,1);
         onBtnClick(cri, bno)
 
     })
-
 
 
 </script>

@@ -19,8 +19,30 @@
         update TBL_REPLY set REPLY = #{reply}, UPDATEDATE = sysdate where RNO = #{rno}
     </update>
 
+<!--    <select id="getListWithPaging" resultType="com.board.domain.ReplyVO">-->
+<!--        select rno, bno, REPLY, REPLYER, REPLYDATE, UPDATEDATE from TBL_REPLY where BNO = #{bno} order by RNO asc-->
+<!--    </select>-->
+
     <select id="getListWithPaging" resultType="com.board.domain.ReplyVO">
-        select rno, bno, REPLY, REPLYER, REPLYDATE, UPDATEDATE from TBL_REPLY where BNO = #{bno} order by RNO asc
+        <![CDATA[
+        select  RNO, BNO, REPLY, REPLYER, REPLYDATE, UPDATEDATE
+        from
+            (
+                select /*+INDEX(tbl_reply idx_reply)*/
+                ROWNUM rn, rno, bno, reply, replyer, replydate, updatedate
+                from TBL_REPLY
+                where BNO = #{bno}
+                and rno > 0
+                and ROWNUM <= #{cri.pageNum} * #{cri.amount}
+            )
+        where rn > (#{cri.pageNum} -1 ) * #{cri.amount}
+        ]]>
     </select>
 
+    <select id="getReplyCntByBno" resultType="int">
+        <![CDATA[
+        select count(rno) from TBL_REPLY where bno = #{bno}
+
+]]>
+    </select>
 </mapper>

@@ -18,8 +18,14 @@ jQuery.fn.serializeObject = function () {
     return obj;
 };
 
+function init(cri, bno){
+    onBoardBtnClick(cri, bno);
+    onCommentBtnClick();
+    fetchComments2(bno,1);
+}
 
-function onBtnClick(cri, bno) {
+
+function onBoardBtnClick(cri, bno){
     $(".btn").click(function (e) {
         const oper = $(this).data("oper");
         let nextPage = `/board/${oper}?pageNum=${cri.pageNum}&type=${cri.type}&keyword=${cri.keyword}`
@@ -28,19 +34,25 @@ function onBtnClick(cri, bno) {
             self.location = nextPage;
         } else if (oper === "modify") {
             self.location = nextPage + `&bno=${bno}`
-        } else if (oper === "add") {
-            e.preventDefault();
-            const formData = $("#commentForm").serializeObject();
-            replyService.add(formData, function () {
-                $("#commentForm")[0].reset();
-                $("#comments").empty();
-                $("#replyPage").empty();
-                fetchComments2(formData.bno, -1);
-            })
         }
+    })
+}
+
+function onCommentBtnClick(){
+    $(".cbtn").click(function (e) {
+        e.preventDefault();
+        const formData = $("#commentForm").serializeObject();
+        replyService.add(formData, function () {
+            $("#commentForm")[0].reset();
+            $("#comments").empty();
+            $("#replyPage").empty();
+            fetchComments2(formData.bno, -1);
+        })
     })
 
 }
+
+
 
 
 function fetchComments(bno) {

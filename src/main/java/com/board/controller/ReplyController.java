@@ -2,6 +2,7 @@ package com.board.controller;
 
 
 import com.board.domain.Criteria;
+import com.board.domain.ReplyPageDTO;
 import com.board.domain.ReplyVO;
 import com.board.service.ReplyService;
 import lombok.AllArgsConstructor;
@@ -36,14 +37,25 @@ public class ReplyController {
 
     }
 
+//    @GetMapping(value = "/pages/{bno}/{page}",
+//            produces = {"application/json"}
+//    )
+//    public ResponseEntity<List<ReplyVO>> getList(@PathVariable("page") int page, @PathVariable("bno") Long bno){
+//        log.info("---------------------------- getList ----------------------------");
+//        Criteria cri = new Criteria(page, 10);
+//        return new ResponseEntity<>(service.getList(cri,bno), HttpStatus.OK);
+//    }
+//
+
     @GetMapping(value = "/pages/{bno}/{page}",
             produces = {"application/json"}
     )
-    public ResponseEntity<List<ReplyVO>> getList(@PathVariable("page") int page, @PathVariable("bno") Long bno){
+    public ResponseEntity<ReplyPageDTO> getList(@PathVariable("page") int page, @PathVariable("bno") Long bno){
         log.info("---------------------------- getList ----------------------------");
         Criteria cri = new Criteria(page, 10);
-        return new ResponseEntity<>(service.getList(cri,bno), HttpStatus.OK);
+        return new ResponseEntity<>(service.getListPage(cri,bno), HttpStatus.OK);
     }
+
 
     @GetMapping(value = "/{rno}",
             produces = {"application/json"}
