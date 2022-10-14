@@ -18,6 +18,7 @@ const replyService = (function(){
         })
     }
 
+
     function getList(param, cb) {
         const bno = param.bno;
         const page = param.page || 1;
@@ -32,12 +33,12 @@ const replyService = (function(){
         })
     }
 
-    function remove(rno){
+    function remove(rno,cb){
         $.ajax({
             type: 'delete',
             url : '/replies/' + rno,
-            success : function(){
-                console.log("deleted")
+            success : function(data){
+                if(cb) cb(data);
             }
         })
     }
@@ -98,6 +99,6 @@ const replyService = (function(){
         }
     }
 
-    return {add , getList, remove, modify, get, displayTime}
+    return {add ,getList, remove, modify, get, displayTime}
 })();
 
