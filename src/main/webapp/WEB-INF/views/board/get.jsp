@@ -7,6 +7,11 @@
 <body>
 <%@include file="/WEB-INF/views/includes/nav.jsp" %>
 <div class="container mb-3">
+    <input type="hidden" id="pageNum" value="${cri.pageNum}">
+    <input type="hidden" id="type" value="${cri.type}">
+    <input type="hidden" id="keyword" value="${cri.keyword}">
+    <input type="hidden" id="bnoVal" value="${board.bno}">
+
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb p-1 pl-2 pr-2">
             <li class="breadcrumb-item">
@@ -66,10 +71,10 @@
         />
     </div>
     <div>
-        <button class="btn btn-primary" data-oper="list">
+        <button class="btn btn-primary actionBtn" data-oper="back-list">
             뒤로가기
         </button>
-        <button class="btn btn-primary" data-oper="modify">
+        <button class="btn btn-primary actionBtn" data-oper="modify-board">
             수정하기
 
         </button>
@@ -89,7 +94,7 @@
                         <textarea name="reply" rows="2" class="form-control" id="reply"></textarea>
                     </div>
                     <div class="col-2">
-                        <button type="submit" class="btn btn-primary h-100 mr-2" data-oper="add">Add Comment
+                        <button type="submit" class="btn btn-primary h-100 mr-2 actionBtn" data-oper="add-comment">Add Comment
                         </button>
                     </div>
                 </div>
@@ -128,7 +133,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary commentBtn" id="submitModal" data-oper="submit-modify">
+                    <button type="button" class="btn btn-primary actionBtn" id="submitModal" data-oper="modify-comment">
                         Send message
                     </button>
                 </div>
@@ -138,28 +143,14 @@
 
 </div>
 <script src="/resources/js/reply.js"></script>
-<script src="/resources/js/getPage.js"></script>
+<script src="/resources/js/getPage2.js"></script>
 <script>
+    const bno = ${board.bno};
 
-
-    $(document).on("click", ".commentBtn", commentClick);
+    $(document).on("click", ".actionBtn", onButtonClick);
     $(document).on("click", ".page-link", pageClick);
 
-
-    $(function () {
-        const bno = ${board.bno};
-
-        const cri = {
-            pageNum: "${cri.pageNum}",
-            type: "${cri.type}",
-            keyword: "${cri.keyword}"
-        }
-
-        // fetchComments(bno);
-        fetchComments2(bno,1);
-        onBtnClick(cri, bno)
-
-    })
+    fetchComments(bno,1);
 
 
 </script>
