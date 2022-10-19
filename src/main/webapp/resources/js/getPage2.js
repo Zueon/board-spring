@@ -27,18 +27,19 @@ function onButtonClick(e){
     const type =$("#type").val();
     const keyword =$("#keyword").val();
     const bno =$("#bnoVal").val();
+    const currPage = $(".active").children(".page-link").data("page");
 
     console.log(oper);
 
     let nextPage = `/board/${oper}?pageNum=${pageNum}&type=${type}&keyword=${keyword}`
 
     // 뒤로 가기
-    if (oper === "back-list") {
+    if (oper === "list") {
         self.location = nextPage;
     }
 
     // 게시물 수정하기
-    else if (oper === "modify-board") {
+    else if (oper === "modify") {
         self.location = nextPage + `&bno=${bno}`
     }
 
@@ -73,7 +74,7 @@ function onButtonClick(e){
         const delChk = confirm("삭제하시겠습니까?");
         if (delChk){
             replyService.remove(rno, function (res) {
-                location.reload();
+                fetchComments(bno,currPage)
             })
         }
     }
@@ -81,9 +82,9 @@ function onButtonClick(e){
     // 모달창에서 댓글 수정 클릭
     else if (oper === "modify-comment"){
         const formData = $("#editCommentForm").serializeObject();
-        console.log(formData)
+
         replyService.modify(formData, function (res) {
-            location.reload();
+            fetchComments(bno,currPage)
         })
     }
 
@@ -108,7 +109,10 @@ function fetchComments(bno, page) {
             }
 
             // 댓글이 없을 경우
-            if(comments == null || comments.length == 0) return;
+            if(comments == null || comments.length == 0) {
+                $("#comments").empty();
+                return;
+            }
 
             let el = "";
 
@@ -136,11 +140,14 @@ function fetchComments(bno, page) {
     )
 }
 
+// 페이지 목록 출력
 function showReplyPagenation(replyCnt, currentPage){
+
 
     let lastPage = Math.ceil(currentPage / 10.0) * 10;
     let firstPage = lastPage - 9;
 
+    // 1~10 페이지의 경우 prev 버튼이 존재하지 않는다. 11~20페이지의 경우 prev 버튼이 존재한다
     let prev = firstPage != 1;
     let next = false;
 
@@ -159,14 +166,14 @@ function showReplyPagenation(replyCnt, currentPage){
 
     if (prev) prevBtn =
         `<li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous">
+            <a class="page-link" href="#" aria-label="Previous" data-page="${firstPage -1}">
                 <span aria-hidden="true">&laquo;</span>
             </a>
         </li>`
 
     if (next) nextBtn =
         `<li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
+            <a class="page-link" href="#" aria-label="Next" data-page="${lastPage+1}">
                 <span aria-hidden="true">&raquo;</span>
             </a>
         </li>`

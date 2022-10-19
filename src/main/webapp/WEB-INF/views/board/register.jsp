@@ -20,7 +20,7 @@
             </li>
         </ol>
     </nav>
-    <form action="/board/register" method="post">
+    <form action="/board/register" method="post" id="registerForm">
         <div class="form-group">
             <label for="title">Title</label>
             <input
@@ -30,6 +30,12 @@
                     class="form-control"
             />
         </div>
+
+        <div class="form-group uploadFile">
+            <label for="attachment">Attachment</label>
+            <input type="file" name="attachment" class="form-control-file" id="attachment" multiple>
+        </div>
+
 
         <div class="form-group">
             <label for="content">Content</label>
@@ -59,6 +65,20 @@
             </button>
         </div>
     </form>
+
+
+    <div class="card">
+        <div class="card-header">Attachments</div>
+    <div class="uploadResult">
+        <ul id="file-list" class="list-group"></ul>
+    </div>
+    </div>
 </div>
+
+<script src="/resources/js/register.js"></script>
+<script>
+
+</script>
+
 </body>
 </html>

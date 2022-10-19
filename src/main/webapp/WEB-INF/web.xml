@@ -21,6 +21,13 @@
             <param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
+
+        <multipart-config>
+            <location>/Users/jueon/Desktop/study/spring/upload/temp</location>
+            <max-file-size>20971520</max-file-size> <!--20MB -->
+            <max-request-size>41943040</max-request-size> <!--40MB -->
+            <file-size-threshold>20971520</file-size-threshold>
+        </multipart-config>
     </servlet>
 
     <servlet-mapping>
@@ -39,6 +46,10 @@
     <servlet-mapping>
         <servlet-name>default</servlet-name>
         <url-pattern>*.jpg</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.png</url-pattern>
     </servlet-mapping>
 
     <filter>

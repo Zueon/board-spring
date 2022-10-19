@@ -45,7 +45,7 @@
         <c:forEach var="board" items="${list}">
             <tr>
                 <td><c:out value="${board.bno}"/></td>
-                <td><a href="/board/get?bno=${board.bno}&pageNum=${pageInfo.criteria.pageNum}&keyword=${pageInfo.criteria.keyword}&type=${pageInfo.criteria.type}">${board.title}</a></td>
+                <td><a href="/board/get?bno=${board.bno}&pageNum=${pageInfo.criteria.pageNum}&keyword=${pageInfo.criteria.keyword}&type=${pageInfo.criteria.type}">${board.title}<span class="replyCnt">&nbsp;&nbsp;[${board.replyCnt}]</span></a></td>
                 <td><c:out value="${board.writer}"/></td>
                 <td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.regdate}"/></td>
                 <td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.updateDate}"/></td>

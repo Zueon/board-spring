@@ -66,15 +66,15 @@
                 id="writer"
                 name="writer"
                 class="form-control"
-                value='<c:out value="${board.writer}"/>'
+                value="${board.writer}"
                 readonly
         />
     </div>
     <div>
-        <button class="btn btn-primary actionBtn" data-oper="back-list">
+        <button class="btn btn-primary actionBtn" data-oper="list">
             뒤로가기
         </button>
-        <button class="btn btn-primary actionBtn" data-oper="modify-board">
+        <button class="btn btn-primary actionBtn" data-oper="modify">
             수정하기
 
         </button>

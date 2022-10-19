@@ -67,4 +67,8 @@
         margin-right: 3px;
     }
 
+    .replyCnt {
+        color: dodgerblue;
+    }
+
 </style>

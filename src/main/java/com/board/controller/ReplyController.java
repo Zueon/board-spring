@@ -48,7 +48,7 @@ public class ReplyController {
 //
 
     @GetMapping(value = "/pages/{bno}/{page}",
-            produces = {"application/json"}
+            produces = {"application/json", }
     )
     public ResponseEntity<ReplyPageDTO> getList(@PathVariable("page") int page, @PathVariable("bno") Long bno){
         log.info("---------------------------- getList ----------------------------");

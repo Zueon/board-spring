@@ -20,4 +20,6 @@ public interface BoardService {
     public int getTotalBoardCnt(Criteria cri);
 
 
+
+
 }
