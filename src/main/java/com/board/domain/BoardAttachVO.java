@@ -4,10 +4,9 @@ import lombok.Data;
 
 @Data
 public class BoardAttachVO {
-    private String uuid;
-    private String uploadPath;
-    private String fileName;
-    private boolean fileType;
-
+    private String filename;        // 원본 파일의 이름
+    private String uploadPath;    // 업로드된 경로
+    private String uuid;            // uuid 값
+    private boolean image;
     private Long bno;
 }

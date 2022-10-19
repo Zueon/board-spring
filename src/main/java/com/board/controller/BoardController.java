@@ -49,6 +49,10 @@ public class BoardController {
         service.register(board);
         rttr.addFlashAttribute("result",board.getBno());
 
+        if (board.getAttachList() != null) {
+            board.getAttachList().forEach(boardAttachVO -> log.info(boardAttachVO));
+        }
+
         return "redirect:/board/list";
 
     }

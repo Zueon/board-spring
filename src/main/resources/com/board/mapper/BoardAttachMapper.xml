@@ -5,7 +5,7 @@
 
 <mapper namespace="com.board.mapper.BoardAttachMapper">
     <insert id="insert" >
-        insert into TBL_ATTACH (UUID, UPLOADPATH, FILENAME, FILETYPE, BNO) VALUES (#{uuid}, #{uploadPath}, #{fileName}, #{fileType}, #{bno})
+        insert into TBL_ATTACH (UUID, UPLOADPATH, FILENAME, FILETYPE, BNO) VALUES (#{uuid}, #{uploadPath}, #{filename}, #{image}, #{bno})
     </insert>
 
     <delete id="delete">

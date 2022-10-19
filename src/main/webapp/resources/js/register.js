@@ -30,11 +30,51 @@ $(function () {
     const maxSize = 5242880 // 5MB
 
 
-    // form submit 시에 기본 동작을 막아두기
-    formObj.on('submit', function (e) {
+    $(".submitBtn").click(function (e){
         e.preventDefault();
         console.log("submit clicked")
+
+        let inputEl = "";
+
+        $(".list-group-item").each(function(idx, file){
+            console.log(idx)
+            console.log(file)
+            inputEl +=
+                `
+                <input type="hidden" name="attachList[${idx}].filename" value="${$(this).data("filename")}"/>
+                <input type="hidden" name="attachList[${idx}].uuid" value="${$(this).data("uuid")}"/>
+                <input type="hidden" name="attachList[${idx}].uploadPath" value="${$(this).data("uploadpath")}"/>
+                <input type="hidden" name="attachList[${idx}].image" value="${$(this).data("type")}"/>
+                `
+        })
+        formObj.append(inputEl);
+        formObj.submit();
     })
+
+    // formObj.on('submit', function (e) {
+    //     e.preventDefault();
+    //     console.log("submit clicked")
+    //     formObj.action = "/board/register";
+    //     formObj.method = "post";
+    //
+    //     console.log(formObj.action)
+    //     let inputEl = "";
+    //
+    //     $(".list-group-item").each(function(idx, file){
+    //         console.log(idx)
+    //         console.log(file)
+    //         inputEl +=
+    //             `
+    //             <input type="hidden" name="attachList[${idx}].filename" value="${$(this).data("filename")}"/>
+    //             <input type="hidden" name="attachList[${idx}].uuid" value="${$(this).data("uuid")}"/>
+    //             <input type="hidden" name="attachList[${idx}].uploadPath" value="${$(this).data("uploadpath")}"/>
+    //             <input type="hidden" name="attachList[${idx}].type" value="${$(this).data("type")}"/>
+    //             `
+    //     })
+    //     formObj.append(inputEl);
+    //
+    //     formObj.submit();
+    // })
 
     // 파일 선택시
     fileInputEl.change(function (e) {
@@ -89,7 +129,7 @@ $(function () {
 
             if (!file.image) {
                 liEl += `
-                  <li class="list-group-item">
+                  <li class="list-group-item" data-filename="${file.filename}" data-uuid="${file.uuid}" data-uploadPath="${file.uploadPath}" data-type="${file.image}">
                     <img src='/resources/images/file-icon.png'/>${file.filename}
                     <div class="text-right">
                       <i class="bi bi-x-circle removeAttach" data-type="file" data-file="${file.uploadPath}/${file.uuid}_${file.filename}"></i>
@@ -97,10 +137,10 @@ $(function () {
                   </li>`
             } else
                 liEl += `
-                <li class="list-group-item"> 
+                <li class="list-group-item" data-filename="${file.filename}" data-uuid="${file.uuid}" data-uploadPath="${file.uploadPath}" data-type="${file.image}">
                   <img src="/display?filename=${file.uploadPath}/s_${file.uuid}_${file.filename}"/>
                   <div class="text-right">
-                      <i class="bi bi-x-circle removeAttach" data-type="img" data-file="${file.uploadPath}/s_${file.uuid}_${file.filename}"></i>
+                      <i class="bi bi-x-circle removeAttach" data-type="image" data-file="${file.uploadPath}/s_${file.uuid}_${file.filename}"></i>
                   </div>
                 </li>
                 `

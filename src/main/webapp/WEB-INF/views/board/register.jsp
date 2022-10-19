@@ -60,7 +60,7 @@
             <a class="btn btn-primary" href="/board/list">
                 Back
             </a>
-            <button type="submit" class="btn btn-primary">
+            <button type="button" class="btn btn-primary submitBtn">
                 Submit
             </button>
         </div>
