@@ -4,8 +4,9 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
        xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:task="http://www.springframework.org/schema/task"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-	   					   http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+	   					   http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
     <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig" >
 <!--        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>-->
@@ -33,6 +34,9 @@
 
     <mybatis-spring:scan base-package="com.board.mapper" />
     <context:component-scan base-package="com.board.service"/>
+    <context:component-scan base-package="com.board.task"/>
     <aop:aspectj-autoproxy/>
+
+    <task:annotation-driven/>
 
 </beans>

@@ -14,10 +14,20 @@
         where UUID = #{uuid}
     </delete>
 
+    <delete id="deleteAll">
+        delete from TBL_ATTACH where BNO = #{bno}
+    </delete>
+
     <select id="findByBno" resultType="com.board.domain.BoardAttachVO">
         select *
         from TBL_ATTACH
         where BNO = #{bno}
+    </select>
+
+    <select id="getOldFiles" resultType="com.board.domain.BoardAttachVO">
+        select *
+        from TBL_ATTACH
+        where substr(UPLOADPATH,47) = to_char(sysdate-1,'yyyy/mm/dd')
     </select>
 </mapper>
 

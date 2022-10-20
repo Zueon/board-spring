@@ -20,7 +20,7 @@
             </li>
         </ol>
     </nav>
-    <form name="frm" action="/board/modify?pageNum=${cri.pageNum}&type=${cri.type}&keyword=${cri.keyword}" method="post">
+    <form name="frm" action="/board/modify?pageNum=${cri.pageNum}&type=${cri.type}&keyword=${cri.keyword}" method="post" id="modifyForm">
         <div class="form-group">
             <label for="title">BNO</label>
             <input
@@ -63,7 +63,16 @@
                             readonly
             />
         </div>
-        <div>
+
+        <div class="card mt-5">
+            <div class="card-header">Attachments</div>
+                <input type="file" name="attachment" class="form-control-file" id="attachment" multiple>
+            <div class="attachments">
+                <ul id="file-list" class="list-group"></ul>
+            </div>
+        </div>
+
+        <div class="mt-5">
             <button class="btn btn-secondary" data-oper="list">
                 목록보기
             </button>
@@ -76,25 +85,15 @@
             </button>
         </div>
 
-        <input type="hidden" name="pageNum" value="${cri.pageNum}">
+
     </form>
+    <input type="hidden" name="pageNum" id="pageNum" value="${cri.pageNum}">
+    <input type="hidden" name="type" id="type" value="${cri.type}">
+    <input type="hidden" name="keyword" id="keyword" value="${cri.keyword}">
 </div>
+<script src="/resources/js/modify.js"></script>
 <script>
-    $(function () {
-        const frm = $("form");
 
-        $(".btn").click(function (e) {
-            e.preventDefault();
-            const oper = $(this).data("oper");
-            if (oper === "list") {
-                self.location = "/board/list?pageNum=${cri.pageNum}&type=${cri.type}&keyword=${cri.keyword}";
-                return;
-            } else if (oper === "remove") frm.attr("action", "/board/remove?pageNum=${cri.pageNum}&type=${cri.type}&keyword=${cri.keyword}");
-
-            frm.submit();
-        })
-
-    })
 </script>
 </body>
 </html>

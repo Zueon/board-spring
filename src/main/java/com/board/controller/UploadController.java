@@ -141,12 +141,10 @@ public class UploadController {
     public ResponseEntity<Resource> downloadFile(String filename){
         log.info("UploadController - downloadFile------------------------");
         FileSystemResource resource = new FileSystemResource(filename);
-        log.info(resource);
 
         if (!resource.exists()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         // HttpHeader 객체를 이용하여 다운로드 시 파일의 이름을 처리한다.
-
         String srcName = resource.getFilename();
         // uuid 제거
         String srcOriginName = srcName.substring(srcName.indexOf("_")+1);

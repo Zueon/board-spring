@@ -14,6 +14,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Controller
@@ -86,11 +90,38 @@ public class BoardController {
 
     @PostMapping("/remove")
     public String remove(@RequestParam("bno")Long bno, Criteria cri, RedirectAttributes rttr) {
-        log.info("modify : " + bno);
-        if (service.remove(bno)) rttr.addFlashAttribute("result","success" );
+        List<BoardAttachVO> attachList = service.getAttachments(bno);
+
+        if (service.remove(bno)) {
+            deleteFiles(attachList);
+            rttr.addFlashAttribute("result", "success");
+        }
         rttr.addAttribute("pageNum", cri.getPageNum());
         return "redirect:/board/list" +  cri.getListLink();
 
+    }
+
+    private void deleteFiles(List<BoardAttachVO> attachList){
+        if (attachList == null || attachList.size() == 0) return;
+
+        log.info("-------------------------- BoardController deleteFiles --------------------------");
+        log.info(attachList);
+
+        attachList.forEach(boardAttachVO -> {
+            try {
+                Path file = Paths.get(boardAttachVO.getUploadPath() + "/" + boardAttachVO.getUuid() + "_" + boardAttachVO.getFilename());
+
+                Files.deleteIfExists(file);
+                if(Files.probeContentType(file).startsWith("image")) {
+                    Path thumbnail = Paths.get(boardAttachVO.getUploadPath() + "/s_" + boardAttachVO.getUuid() + "_" + boardAttachVO.getFilename());
+                    Files.delete(thumbnail);
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        });
     }
 
 }
