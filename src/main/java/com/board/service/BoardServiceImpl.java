@@ -1,5 +1,6 @@
 package com.board.service;
 
+import com.board.domain.BoardAttachVO;
 import com.board.domain.BoardVO;
 import com.board.domain.Criteria;
 import com.board.mapper.BoardAttachMapper;
@@ -71,4 +72,9 @@ public class BoardServiceImpl implements BoardService{
         return mapper.getTotalBoardCnt(cri);
     }
 
+    @Override
+    public List<BoardAttachVO> getAttachments(Long bno) {
+        log.info("boardService ----- getAttachments ");
+        return attachMapper.findByBno(bno);
+    }
 }

@@ -1,5 +1,6 @@
 package com.board.service;
 
+import com.board.domain.BoardAttachVO;
 import com.board.domain.BoardVO;
 import com.board.domain.Criteria;
 
@@ -16,6 +17,8 @@ public interface BoardService {
 
 //    public List<BoardVO> getList();
     public List<BoardVO> getList(Criteria cri);
+
+    public List<BoardAttachVO> getAttachments(Long bno);
 
     public int getTotalBoardCnt(Criteria cri);
 

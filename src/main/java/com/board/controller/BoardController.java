@@ -1,18 +1,20 @@
 package com.board.controller;
 
+import com.board.domain.BoardAttachVO;
 import com.board.domain.BoardVO;
 import com.board.domain.Criteria;
 import com.board.domain.PageDTO;
 import com.board.service.BoardService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 @Log4j2
@@ -43,6 +45,22 @@ public class BoardController {
         log.info("----------------- register -----------------");
     }
 
+
+    @GetMapping({"/get", "/modify"})
+    public void get(@RequestParam("bno")Long bno, Model model, Criteria cri){
+        log.info("/get or /modify");
+        model.addAttribute("board", service.get(bno));
+        model.addAttribute("cri", cri);
+    }
+
+    @GetMapping(value = "/getAttachments", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<List<BoardAttachVO>> getAttachments(Long bno) {
+        log.info("BoardController ----------getAttachments by bno" + bno);
+        return new ResponseEntity<>(service.getAttachments(bno), HttpStatus.OK);
+    }
+
+
     @PostMapping("/register")
     public String register(BoardVO board, RedirectAttributes rttr){
         log.info("register : " + board);
@@ -54,15 +72,8 @@ public class BoardController {
         }
 
         return "redirect:/board/list";
-
     }
 
-    @GetMapping({"/get", "/modify"})
-    public void get(@RequestParam("bno")Long bno, Model model, Criteria cri){
-        log.info("/get or /modify");
-        model.addAttribute("board", service.get(bno));
-        model.addAttribute("cri", cri);
-    }
 
     @PostMapping("/modify")
     public String modify(BoardVO board, Criteria cri, RedirectAttributes rttr){

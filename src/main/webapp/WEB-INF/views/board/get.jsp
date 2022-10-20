@@ -79,7 +79,14 @@
 
         </button>
     </div>
-    <h4 class="mt-3">Comments</h4>
+
+    <div class="card mt-5">
+        <div class="card-header">Attachments</div>
+        <div class="attachments">
+            <ul id="file-list" class="list-group"></ul>
+        </div>
+    </div>
+    <h4 class="mt-5">Comments</h4>
 
 
     <div class="mt-3">
@@ -102,6 +109,8 @@
             </fieldset>
         </form>
     </div>
+
+
 
     <div class="mt-3 border-bottom">
         <div class="border-top pt-1 pb-1" id="comments">

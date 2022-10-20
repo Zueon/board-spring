@@ -44,37 +44,12 @@ $(function () {
                 <input type="hidden" name="attachList[${idx}].filename" value="${$(this).data("filename")}"/>
                 <input type="hidden" name="attachList[${idx}].uuid" value="${$(this).data("uuid")}"/>
                 <input type="hidden" name="attachList[${idx}].uploadPath" value="${$(this).data("uploadpath")}"/>
-                <input type="hidden" name="attachList[${idx}].image" value="${$(this).data("type")}"/>
+                <input type="hidden" name="attachList[${idx}].fileType" value="${$(this).data("type")}"/>
                 `
         })
         formObj.append(inputEl);
         formObj.submit();
     })
-
-    // formObj.on('submit', function (e) {
-    //     e.preventDefault();
-    //     console.log("submit clicked")
-    //     formObj.action = "/board/register";
-    //     formObj.method = "post";
-    //
-    //     console.log(formObj.action)
-    //     let inputEl = "";
-    //
-    //     $(".list-group-item").each(function(idx, file){
-    //         console.log(idx)
-    //         console.log(file)
-    //         inputEl +=
-    //             `
-    //             <input type="hidden" name="attachList[${idx}].filename" value="${$(this).data("filename")}"/>
-    //             <input type="hidden" name="attachList[${idx}].uuid" value="${$(this).data("uuid")}"/>
-    //             <input type="hidden" name="attachList[${idx}].uploadPath" value="${$(this).data("uploadpath")}"/>
-    //             <input type="hidden" name="attachList[${idx}].type" value="${$(this).data("type")}"/>
-    //             `
-    //     })
-    //     formObj.append(inputEl);
-    //
-    //     formObj.submit();
-    // })
 
     // 파일 선택시
     fileInputEl.change(function (e) {

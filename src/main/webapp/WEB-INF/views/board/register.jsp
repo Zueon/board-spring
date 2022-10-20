@@ -69,9 +69,9 @@
 
     <div class="card">
         <div class="card-header">Attachments</div>
-    <div class="uploadResult">
-        <ul id="file-list" class="list-group"></ul>
-    </div>
+        <div class="uploadResult">
+            <ul id="file-list" class="list-group"></ul>
+        </div>
     </div>
 </div>
 

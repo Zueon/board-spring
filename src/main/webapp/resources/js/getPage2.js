@@ -48,8 +48,10 @@ function onButtonClick(e){
         e.preventDefault();
 
         const commentForm = $("#commentForm").serializeObject();
-        
+
         replyService.add(commentForm, function () {
+            $("#reply").val("");
+            $("#replyer").val("");
             fetchComments(bno, -1);
         })
     }
@@ -198,3 +200,49 @@ function pageClick(){
 
 }
 
+$(function(){
+    const bno =$("#bnoVal").val();
+
+    $.ajax({
+        url:"/board/getAttachments",
+        data: {bno},
+        success : function(data){
+            console.log(data);
+            let liEl = "";
+
+            $.each(data, function(idx, file){
+                if(file.fileType){
+                    liEl += `
+                <li class="list-group-item" data-filename="${file.filename}" data-uuid="${file.uuid}" data-uploadPath="${file.uploadPath}" data-type="${file.fileType}">
+                  <img src="/display?filename=${file.uploadPath}/s_${file.uuid}_${file.filename}"/>
+                </li>
+                `
+                } else {
+                    liEl += `
+                  <li class="list-group-item" data-filename="${file.filename}" data-uuid="${file.uuid}" data-uploadPath="${file.uploadPath}" data-type="${file.fileType}">
+                    <img src='/resources/images/file-icon.png'/>${file.filename}
+                  </li>`
+                }
+            })
+            $("#file-list").html(liEl);
+        }
+    })
+
+    $(document).on("click", ".list-group-item", function(e){
+        const liEl = $(this);
+        const path = `${liEl.data("uploadpath")}/${liEl.data("uuid")}_${liEl.data("filename")}`
+
+        if(liEl.data("type")){
+            window.open(`/display?filename=${path}`)
+        } else {
+            self.location = `/download?filename=${path}`
+        }
+
+    })
+
+    function showImage(fileCallPath){
+        alert(fileCallPath);
+
+    }
+
+})

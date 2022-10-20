@@ -3,8 +3,11 @@ package com.board.controller;
 import com.board.domain.AttachmentDTO;
 import lombok.extern.log4j.Log4j2;
 import net.coobird.thumbnailator.Thumbnailator;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
@@ -16,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -99,7 +103,7 @@ public class UploadController {
 
         file = new File(filename);
         file.delete();
-        if (type.equals("img")) {
+        if (type.equals("image")) {
             String largeFilename = file.getAbsolutePath().replace("s_", "");
             log.info("largeFilename" + largeFilename);
 
@@ -132,4 +136,28 @@ public class UploadController {
         return result;
     }
 
+    @GetMapping(value = "/download", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    @ResponseBody
+    public ResponseEntity<Resource> downloadFile(String filename){
+        log.info("UploadController - downloadFile------------------------");
+        FileSystemResource resource = new FileSystemResource(filename);
+        log.info(resource);
+
+        if (!resource.exists()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        // HttpHeader 객체를 이용하여 다운로드 시 파일의 이름을 처리한다.
+
+        String srcName = resource.getFilename();
+        // uuid 제거
+        String srcOriginName = srcName.substring(srcName.indexOf("_")+1);
+        HttpHeaders headers = new HttpHeaders();
+
+        try {
+            headers.add("Content-Disposition",
+                    "attachment; filename=" + new String(srcOriginName.getBytes("UTF-8"), "ISO-8859-1")); // 한글파일 다운로드 시 깨짐 방지
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
+    }
 }
