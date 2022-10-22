@@ -1,8 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
     <%@include file="/WEB-INF/views/includes/header.jsp" %>
     <title>Title</title>
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
 </head>
 <body>
 <%@include file="/WEB-INF/views/includes/nav.jsp" %>
@@ -54,6 +57,8 @@
                     id="writer"
                     name="writer"
                     class="form-control"
+                    value='<sec:authentication property="principal.username"/>'
+                    readonly
             />
         </div>
         <div>
@@ -64,6 +69,7 @@
                 Submit
             </button>
         </div>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     </form>
 
 

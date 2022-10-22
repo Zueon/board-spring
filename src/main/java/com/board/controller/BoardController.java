@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -45,7 +46,8 @@ public class BoardController {
     }
 
     @GetMapping("/register")
-    public void list(){
+    @PreAuthorize("isAuthenticated()")
+    public void register(){
         log.info("----------------- register -----------------");
     }
 
@@ -66,6 +68,7 @@ public class BoardController {
 
 
     @PostMapping("/register")
+    @PreAuthorize("isAuthenticated()")      // 로그인에 성공한 사용자만 해당 기능을 사용할 수 있함
     public String register(BoardVO board, RedirectAttributes rttr){
         log.info("register : " + board);
         service.register(board);
@@ -79,6 +82,7 @@ public class BoardController {
     }
 
 
+    @PreAuthorize("principal.username == #board.writer")
     @PostMapping("/modify")
     public String modify(BoardVO board, Criteria cri, RedirectAttributes rttr){
         log.info("modify : " + board);
@@ -88,8 +92,9 @@ public class BoardController {
         return "redirect:/board/list" + cri.getListLink();
     }
 
+    @PreAuthorize("principal.username == #writer")
     @PostMapping("/remove")
-    public String remove(@RequestParam("bno")Long bno, Criteria cri, RedirectAttributes rttr) {
+    public String remove(@RequestParam("bno")Long bno, Criteria cri, RedirectAttributes rttr, String writer) {
         List<BoardAttachVO> attachList = service.getAttachments(bno);
 
         if (service.remove(bno)) {

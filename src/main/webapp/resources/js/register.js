@@ -1,4 +1,8 @@
 $(document).on('click', ".removeAttach", function (e) {
+
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+
     const filename = $(this).data("file");
     const type = $(this).data("type");
     const targetEl = $(this).closest("li");
@@ -11,6 +15,9 @@ $(document).on('click', ".removeAttach", function (e) {
                 {
                     filename : filename, type:type
                 },
+            beforeSend: function(xhr){
+                xhr.setRequestHeader(header, token);
+            },
             dataType : "text",
             type: "POST",
             success : function (result) {
@@ -22,7 +29,11 @@ $(document).on('click', ".removeAttach", function (e) {
 })
 
 
+
 $(function () {
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+
     const formObj = $("#registerForm");
     const fileInputEl = $("#attachment");
 
@@ -53,6 +64,10 @@ $(function () {
 
     // 파일 선택시
     fileInputEl.change(function (e) {
+
+        console.log(header)
+        console.log(token)
+
         let formData = new FormData();      // 새로운 formData 객체 생성
         let files = $(this)[0].files;
 
@@ -68,6 +83,9 @@ $(function () {
                 url: '/upload',
                 processData: false,
                 contentType: false,
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader(header, token);
+                },
                 data: formData,
                 type: 'post',
                 dataType: 'json',

@@ -1,8 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:authentication property="principal" var="pinfo"/>
 <html>
 <head>
     <%@include file="/WEB-INF/views/includes/header.jsp" %>
     <title>Title</title>
+    <meta name="username" content="${pinfo? pinfo.username : ''}">
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
 </head>
 <body>
 <%@include file="/WEB-INF/views/includes/nav.jsp" %>
@@ -74,10 +79,11 @@
         <button class="btn btn-primary actionBtn" data-oper="list">
             뒤로가기
         </button>
-        <button class="btn btn-primary actionBtn" data-oper="modify">
-            수정하기
-
-        </button>
+        <sec:authorize access="isAuthenticated()">
+            <c:if test="${pinfo.username eq board.writer}">
+                <button class="btn btn-primary actionBtn" data-oper="modify">수정하기</button>
+            </c:if>
+        </sec:authorize>
     </div>
 
     <div class="card mt-5">
@@ -95,21 +101,23 @@
             <fieldset>
                 <div class="row">
                     <div class="col-2">
-                        <input type="text" class="form-control" placeholder="작성자" name="replyer" id="replyer">
+                        <input type="text" class="form-control" placeholder="작성자" name="replyer" id="replyer" value="" readonly/>
                     </div>
                     <div class="col-8">
                         <textarea name="reply" rows="2" class="form-control" id="reply"></textarea>
                     </div>
                     <div class="col-2">
-                        <button type="submit" class="btn btn-primary h-100 mr-2 actionBtn" data-oper="add-comment">Add Comment
+                        <sec:authorize access="isAuthenticated()" >
+                        <button type="submit" class="btn btn-primary h-100 mr-2 actionBtn" data-oper="add-comment">Add
+                            Comment
                         </button>
+                        </sec:authorize>
                     </div>
                 </div>
 
             </fieldset>
         </form>
     </div>
-
 
 
     <div class="mt-3 border-bottom">
@@ -159,7 +167,7 @@
     $(document).on("click", ".actionBtn", onButtonClick);
     $(document).on("click", ".page-link", pageClick);
 
-    fetchComments(bno,1);
+    fetchComments(bno, 1);
 
 
 </script>

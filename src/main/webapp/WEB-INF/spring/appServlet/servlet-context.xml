@@ -4,12 +4,13 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xmlns:beans="http://www.springframework.org/schema/beans"
              xmlns:context="http://www.springframework.org/schema/context"
+             xmlns:security="http://www.springframework.org/schema/security"
              xsi:schemaLocation="http://www.springframework.org/schema/mvc
 			 http://www.springframework.org/schema/mvc/spring-mvc.xsd
 			 http://www.springframework.org/schema/beans
 			 http://www.springframework.org/schema/beans/spring-beans.xsd
 			 http://www.springframework.org/schema/context
-			 http://www.springframework.org/schema/context/spring-context.xsd">
+			 http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd">
 
     <!-- 스캔한 패지키 내부의 클래스 중 Controller 어노테이션을 가지고 있는 클래스들을 Controller로 로딩하도록 한다 -->
     <annotation-driven/>
@@ -24,5 +25,7 @@
     <resources mapping="/**" location="/resources/"/>
     <resources mapping="/js/**" location="/resources/js/" />
     <resources mapping="/images/**" location="/resources/images/" />
+
+    <security:global-method-security pre-post-annotations="enabled" secured-annotations="enabled" />
 
 </beans:beans>

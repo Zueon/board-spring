@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.board.mapper.MemberMapper">
+
+    <resultMap id="memberMap" type="com.board.domain.MemberVO">
+        <id property="userid" column="userid"/>
+        <result property="userid" column="userid"/>
+        <result property="userpw" column="userpw"/>
+        <result property="userName" column="userName"/>
+        <result property="regDate" column="regDate"/>
+        <result property="updateDate" column="updateDate"/>
+        <collection property="authList" resultMap="authMap"/>
+    </resultMap>
+
+    <resultMap id="authMap" type="com.board.domain.AuthVO" >
+        <result property="userid" column="userid"/>
+        <result property="auth" column="auth"/>
+    </resultMap>
+
+    <select id="read" resultMap="memberMap">
+        SELECT mem.USERID, USERPW, USERNAME, REGDATE, UPDATEDATE, ENABLED, AUTH
+        FROM TBL_MEMBER mem LEFT OUTER JOIN TBL_MEMBER_AUTH auth on mem.USERID = auth.USERID
+        WHERE mem.USERID = #{userid}
+    </select>
+</mapper>

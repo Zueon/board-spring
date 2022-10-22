@@ -20,6 +20,12 @@ jQuery.fn.serializeObject = function () {
 };
 
 
+$(document).ajaxSend(function (e, xhr, options) {
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+
+    xhr.setRequestHeader(header, token);
+})
 
 function onButtonClick(e){
     const oper = $(this).data("oper");
@@ -51,16 +57,16 @@ function onButtonClick(e){
 
         replyService.add(commentForm, function () {
             $("#reply").val("");
-            $("#replyer").val("");
             fetchComments(bno, -1);
         })
     }
 
     // 댓글 수정 버튼 클릭 - 모달 창 열림
     else if (oper === "open-modal") {
-        const replyer = $(this).parents(".comment").find(".comment-replyer").text();
+        // const replyer = $(this).parents(".comment").find(".comment-replyer").text();
         const reply = $(this).parents(".comment").find(".comment-reply").text();
         const rno = $(this).parents(".comment").attr("id");
+        var  replyer = $("meta[name='username']").attr("content")
 
         $("#rno").val(rno);
         $("#reply-modal").val(reply);
@@ -95,6 +101,9 @@ function onButtonClick(e){
 
 // 게시물의 댓글 불러오기
 function fetchComments(bno, page) {
+    var replyer = $("meta[name='username']").attr("content")
+    // var replyer = $("meta[name='username']").attr("content");
+
     console.log(page)
     replyService.getList(
         {
@@ -117,9 +126,16 @@ function fetchComments(bno, page) {
             }
 
             let el = "";
+            let icon =   `
+                        <div class="col-1">
+                          <i class="bi bi-x-square mr-1 actionBtn" data-oper="delete-comment"> </i>
+                          <i class="bi bi-pencil-square actionBtn" data-oper="open-modal"></i></div> 
+                        `
+
 
             // 댓글 리스트를 한 요소씩 순회하면서 HTML element 를 추가한다.
             $.each(comments, (idx, comment) => {
+
                  el +=
                     `<div class="row mt-3 comment" id=${comment.rno}>
                         <div class="col-1 comment-replyer" >${comment.replyer} </div>
@@ -127,11 +143,8 @@ function fetchComments(bno, page) {
                         <small class="d-block col-1" >
                             <span> ${replyService.displayTime(comment.replyDate)} </span>
                         </small>
-                        <div class="col-1">
-                        <i class="bi bi-x-square mr-1 actionBtn" data-oper = "delete-comment"  > </i>
-                        <i class="bi bi-pencil-square actionBtn" data-oper = "open-modal"></i>
-                        </div>
-                         
+                        ${replyer === comment.replyer? icon: ""}
+
                       </div>`
 
             })

@@ -1,8 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:authentication property="principal" var="pinfo"/>
+
 <html>
 <head>
     <%@include file="/WEB-INF/views/includes/header.jsp" %>
     <title>Title</title>
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
 </head>
 <body>
 <%@include file="/WEB-INF/views/includes/nav.jsp" %>
@@ -20,7 +25,10 @@
             </li>
         </ol>
     </nav>
-    <form name="frm" action="/board/modify?pageNum=${cri.pageNum}&type=${cri.type}&keyword=${cri.keyword}" method="post" id="modifyForm">
+    <form name="frm" action="/board/modify?pageNum=${cri.pageNum}&type=${cri.type}&keyword=${cri.keyword}" method="post"
+          id="modifyForm">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
         <div class="form-group">
             <label for="title">BNO</label>
             <input
@@ -66,7 +74,7 @@
 
         <div class="card mt-5">
             <div class="card-header">Attachments</div>
-                <input type="file" name="attachment" class="form-control-file" id="attachment" multiple>
+            <input type="file" name="attachment" class="form-control-file" id="attachment" multiple>
             <div class="attachments">
                 <ul id="file-list" class="list-group"></ul>
             </div>
@@ -76,13 +84,16 @@
             <button class="btn btn-secondary" data-oper="list">
                 목록보기
             </button>
-
-            <button class="btn btn-primary" data-oper="modify">
-                수정하기
-            </button>
-            <button class="btn btn-danger" data-oper="remove">
-                삭제하기
-            </button>
+            <sec:authorize access="isAuthenticated()">
+                <c:if test="${pinfo.username eq board.writer}">
+                    <button class="btn btn-primary" data-oper="modify">
+                        수정하기
+                    </button>
+                    <button class="btn btn-danger" data-oper="remove">
+                        삭제하기
+                    </button>
+                </c:if>
+            </sec:authorize>
         </div>
 
 

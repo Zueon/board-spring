@@ -1,4 +1,6 @@
 $(document).on('click', ".removeAttach", function (e) {
+
+
     const filename = $(this).data("file");
     const type = $(this).data("type");
     const targetEl = $(this).closest("li");
@@ -6,25 +8,11 @@ $(document).on('click', ".removeAttach", function (e) {
     if (removeChk) {
         targetEl.remove();
     }
-    //
-    // $.ajax(
-    //     {
-    //         url:"/deleteFile",
-    //         data:
-    //             {
-    //                 filename : filename, type:type
-    //             },
-    //         dataType : "text",
-    //         type: "POST",
-    //         success : function (result) {
-    //             console.log(result);
-    //             targetEl.remove();
-    //         }
-    //     }
-    // )
+
 })
 
 $(function () {
+
     const frm = $("form");
     const pageNum =$("#pageNum").val();
     const type =$("#type").val();
@@ -68,6 +56,10 @@ $(function () {
 })
 
 $(function () {
+
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+
     const bno =$("#bno").val();
     const fileInputEl = $("#attachment");
     const regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");    // 업로드 제한 파일 확장자명
@@ -101,6 +93,9 @@ $(function () {
                 url: '/upload',
                 processData: false,
                 contentType: false,
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader(header, token);
+                },
                 data: formData,
                 type: 'post',
                 dataType: 'json',

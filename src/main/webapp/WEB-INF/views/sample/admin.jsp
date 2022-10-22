@@ -1,17 +1,16 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: jueon
-  Date: 10/21/22
-  Time: 12:08 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
-admin
+<h1>sample/admin PAGE</h1>
+
+<p>principal : <sec:authentication property="principal"/></p>
+<p>MemberVO : <sec:authentication property="principal.member"/></p>
+<p>MemberVO : <sec:authentication property="principal.member.userName"/></p>
+<p>MemberVO : <sec:authentication property="principal.member.authList"/></p>
 
 <a href="/customLogout">Logout</a>
 </body>

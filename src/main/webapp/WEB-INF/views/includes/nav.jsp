@@ -1,3 +1,4 @@
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <nav class="navbar navbar-expand-sm navbar-light bg-light mb-3">
@@ -27,7 +28,16 @@
 
 
             </ul>
+
             <ul class="navbar-nav ml-auto">
+                <sec:authorize access="isAuthenticated()" >
+
+                <li class="nav-item">
+                    <a href="/customLogout" class="nav-link">
+                        Logout
+                    </a>
+                </li>
+                </sec:authorize>
                 <li class="nav-item">
                     <a href="/users" class="nav-link">
                         Users
